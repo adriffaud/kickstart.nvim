@@ -538,19 +538,31 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        -- elixirls = {},
         gopls = {},
-        elixirls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        html = {
+          capabilities = capabilities,
+          filetypes = { 'html', 'templ' },
+        },
+        htmx = {
+          capabilities = capabilities,
+          filetypes = { 'html', 'templ' },
+        },
+        prettierd = {},
+        tailwindcss = {
+          capabilities = capabilities,
+          filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+          init_options = { userLanguages = { templ = 'html' } },
+        },
+        templ = {},
+        yamlls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
+        tsserver = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -567,6 +579,9 @@ require('lazy').setup({
           },
         },
       }
+
+      -- Link templ extension to LSP
+      vim.filetype.add { extension = { templ = 'templ' } }
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -800,7 +815,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'elixir', 'heex', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
