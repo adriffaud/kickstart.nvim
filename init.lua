@@ -154,6 +154,9 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Add rulers to 80 and 120 character count.
+vim.opt.colorcolumn = '80,120'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
