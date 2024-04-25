@@ -551,6 +551,10 @@ require('lazy').setup({
           capabilities = capabilities,
           filetypes = { 'html', 'templ' },
         },
+        lexical = {
+          cmd = { '/home/adrien/personal/lexical/_build/dev/package/lexical/bin/start_lexical.sh' },
+          filetypes = { 'elixir', 'eelixir', 'heex' },
+        },
         prettierd = {},
         tailwindcss = {
           capabilities = capabilities,
