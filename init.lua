@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -127,8 +127,6 @@ vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
-
-vim.opt.colorcolumn = '80,120'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -155,6 +153,9 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Add rulers to 80 and 120 character count.
+vim.opt.colorcolumn = '80,120'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -567,18 +568,36 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        elixirls = {},
+        cssls = {},
         gopls = {},
-        lexical = {},
-        -- pyright = {},
-        rust_analyzer = {},
+        html = {
+          capabilities = capabilities,
+          filetypes = { 'html', 'templ', 'heex' },
+        },
+        htmx = {
+          capabilities = capabilities,
+          filetypes = { 'html', 'templ' },
+        },
+        -- lexical = {
+        --   cmd = { '/home/adrien/personal/lexical/_build/dev/package/lexical/bin/start_lexical.sh' },
+        --   filetypes = { 'elixir', 'eelixir', 'heex' },
+        -- },
+        prettierd = {},
+        tailwindcss = {
+          capabilities = capabilities,
+          filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react', 'heex' },
+          init_options = { userLanguages = { templ = 'html' } },
+        },
+        templ = {},
+        tsserver = {},
+        yamlls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -595,6 +614,9 @@ require('lazy').setup({
           },
         },
       }
+
+      -- Link templ extension to LSP
+      vim.filetype.add { extension = { templ = 'templ' } }
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -654,6 +676,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        templ = { 'templ' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -787,9 +810,18 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'tokyonight-storm'
+      vim.opt.background = 'dark'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
+    end,
+  },
+  {
+    'maxmx03/solarized.nvim',
+    priority = 1000,
+    init = function()
+      -- vim.opt.background = 'light'
+      -- vim.cmd.colorscheme 'solarized'
     end,
   },
 
@@ -837,7 +869,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'elixir', 'heex', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
