@@ -641,7 +641,7 @@ require('lazy').setup({
           init_options = { userLanguages = { templ = 'html' } },
         },
         templ = {},
-        tsserver = {},
+        ts_ls = {},
         yamlls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -880,14 +880,6 @@ require('lazy').setup({
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
-  -- {
-  --   'maxmx03/solarized.nvim',
-  --   priority = 1000,
-  --   init = function()
-  --     -- vim.opt.background = 'light'
-  --     -- vim.cmd.colorscheme 'solarized'
-  --   end,
-  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
